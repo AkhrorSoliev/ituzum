@@ -7,13 +7,13 @@ export function useFetch(url) {
   const [isPending, setIsPending] = useState(false);
 
   const fetchData = useCallback(async () => {
+    setIsPending(true);
     try {
-      setIsPending(true);
       const res = await axiosInstance(url);
       const data = res.data;
       setData(data);
     } catch (err) {
-      setError(err);
+      setError(err.message);
     } finally {
       setIsPending(false);
     }
