@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 
 // pages
-import { Home } from "./pages";
+import { Home, Cart } from "./pages";
 
 function App() {
   const routes = createBrowserRouter([
@@ -15,6 +15,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
         },
       ],
     },

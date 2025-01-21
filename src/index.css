@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .align-elements {
+    @apply mx-auto max-w-7xl px-3;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    @apply grow;
+  }
+}
