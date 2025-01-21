@@ -17,7 +17,7 @@ function Product({ product }) {
       <img
         src={product.thumbnail}
         alt={product.title}
-        className="duration-300 transition w-80 h-auto object-cover group-hover:scale-105"
+        className="duration-300 transition w-80 h-80 object-cover group-hover:scale-105"
       />
       <div>
         <p className="line-clamp-2 mb-1">{product.description}</p>
