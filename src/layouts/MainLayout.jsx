@@ -5,7 +5,7 @@ function MainLayout() {
   return (
     <>
       <Header />
-      <main>
+      <main className="align-elements w-full py-5">
         <Outlet />
       </main>
       <Footer />

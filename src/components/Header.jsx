@@ -1,18 +1,33 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaSun, FaMoon } from "react-icons/fa";
+import { useTheme } from "../hooks/useTheme";
 
 function Header() {
+  const { theme, toggleTheme } = useTheme();
   return (
     <header className="bg-base-200">
       <div className="align-elements">
-        <nav className="navbar">
+        <nav className="navbar p">
           <div className="navbar-start">
-            <Link to="/" className="btn btn-ghost normal-case text-xl ">
+            <Link to="/" className="">
               <img src={Logo} alt="" className="w-10" />
             </Link>
           </div>
-          <div className="navbar-end">
+          <div className="navbar-end flex items-center">
+            <div className="flex items-center">
+              <label className="swap swap-rotate">
+                <input
+                  onChange={toggleTheme}
+                  defaultChecked={theme == "corporate"}
+                  type="checkbox"
+                  className="theme-controller"
+                  value="synthwave"
+                />
+                <FaSun className="swap-off fill-current w-6 h-6" />
+                <FaMoon className="swap-on fill-current w-6 h-6" />
+              </label>
+            </div>
             <div className="flex-none">
               <div className="dropdown dropdown-end">
                 <div
