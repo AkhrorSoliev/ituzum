@@ -3,8 +3,8 @@ import { FaGithub, FaYoutube, FaTelegram } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className=" bg-neutral ">
-      <div className="align-elements footer gap-y-5 text-neutral-content items-center p-4 justify-center md:justify-between">
+    <footer className="bg-base-200">
+      <div className="align-elements footer gap-y-5 items-center p-4 justify-center md:justify-between">
         <aside className="flex items-center">
           <img src={Logo} alt="" className="w-10" />
           <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
