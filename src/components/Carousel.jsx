@@ -10,7 +10,7 @@ function Carousel({ images }) {
           <img
             src={image}
             alt={`Slide ${index + 1}`}
-            className="max-w-80 mx-auto"
+            className="max-w-80 mx-auto object-cover"
           />
           <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
             <a
