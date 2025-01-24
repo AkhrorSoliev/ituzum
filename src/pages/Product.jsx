@@ -4,6 +4,7 @@ import { Carousel, StarRating } from "../components";
 import { MdOutlineDiscount } from "react-icons/md";
 import { FaShippingFast } from "react-icons/fa";
 import { formatCurrency } from "../utils";
+import { MdAddShoppingCart } from "react-icons/md";
 
 function Product() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ function Product() {
   return (
     <section>
       {data && (
-        <div className="align-elements grid grid-cols-1 text-center">
+        <div className="align-elements flex text-center flex-col">
           {/* CAROUSEL */}
           {data.images.length > 1 ? (
             <Carousel images={data.images} />
@@ -40,7 +41,7 @@ function Product() {
             <img
               src={data?.images[0]}
               alt="Product"
-              className="max-w-80 mx-auto"
+              className="max-w-80 mx-auto object-contain"
             />
           )}
           {/* TITLE & BRAND */}
@@ -65,7 +66,7 @@ function Product() {
               <span> {data.shippingInformation}</span>
             </div>
           </div>
-          <div className="flex items-center gap-8 w-full">
+          <div className="flex items-center gap-8 w-full mb-8">
             <h3 className="text-4xl">
               {formatCurrency(
                 data.price - (data.price / 100) * data.discountPercentage
@@ -77,6 +78,38 @@ function Product() {
             <p className="text-md  badge badge-info text-content">
               {data.discountPercentage}%
             </p>
+          </div>
+          <div className="mb-5">
+            <button className="btn btn-primary btn-block text-white">
+              Add to Cart
+              <MdAddShoppingCart className="text-xl" />
+            </button>
+          </div>
+          <div className="mb-4">
+            <p className="text-lg text-justify">
+              <span className="font-semibold">Desciption:</span>{" "}
+              {data.description}
+            </p>
+          </div>
+          <div className="border border-opacity-30 p-2">
+            <h2 className="text-left mb-2">
+              Reviews: <span className="text-md">{data.reviews.length}</span>
+            </h2>
+            <div className="flex flex-col gap-2">
+              {data.reviews.map((review) => {
+                return (
+                  <div key={review.id} className="border p-3">
+                    <div className="flex justify-between">
+                      <span className="font-semibold">
+                        {review.reviewerName}:
+                      </span>
+                      <StarRating rating={review.rating} />
+                    </div>
+                    <p className="text-left">{review.comment}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
