@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import { FaShoppingCart, FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from "../hooks/useTheme";
+import { useGlobalContext } from "../hooks/useGlobalContext";
 
 function Header() {
   const { theme, toggleTheme } = useTheme();
+  const { totalQuantity } = useGlobalContext();
   return (
     <header className="bg-base-200">
       <div className="align-elements">
@@ -37,7 +39,9 @@ function Header() {
                 >
                   <div className="indicator">
                     <FaShoppingCart className="w-5 h-5" />
-                    <span className="badge badge-sm indicator-item">8</span>
+                    <span className="badge badge-sm indicator-item">
+                      {totalQuantity}
+                    </span>
                   </div>
                 </div>
                 <div
