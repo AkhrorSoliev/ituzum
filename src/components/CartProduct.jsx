@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { formatCurrency } from "../utils";
+import { useGlobalContext } from "../hooks/useGlobalContext";
 
 function CartProduct({ product }) {
+  const { dispatch } = useGlobalContext();
   const [amount, setAmount] = useState(product.quantity);
 
   // Handle changes to the amount input
@@ -23,6 +25,10 @@ function CartProduct({ product }) {
     if (amount > 1) {
       setAmount((prev) => prev - 1);
     }
+  };
+
+  const removeProduct = (id) => {
+    dispatch({ type: "REMOVE_PRODUCT", payload: id });
   };
 
   return (
@@ -79,7 +85,12 @@ function CartProduct({ product }) {
         </div>
       </td>
       <th>
-        <button className="btn btn-ghost btn-xs">details</button>
+        <button
+          onClick={() => removeProduct(product.id)}
+          className="btn btn-ghost hover:bg-red-400 hover:text-white btn-xs"
+        >
+          Delete
+        </button>
       </th>
     </tr>
   );
