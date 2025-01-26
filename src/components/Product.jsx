@@ -1,14 +1,22 @@
 import { FaStar } from "react-icons/fa";
 import { formatCurrency } from "../utils";
 import { MdAddShoppingCart } from "react-icons/md";
-
+import { useGlobalContext } from "../hooks/useGlobalContext";
 import { Link } from "react-router-dom";
-
-const handleAddProduct = (e) => {
-  e.preventDefault();
-};
+import toast from "react-hot-toast";
 
 function Product({ product }) {
+  const { addToCart } = useGlobalContext();
+
+  const handleAddProduct = (e, product) => {
+    e.preventDefault();
+    addToCart({
+      ...product,
+      quantity: 1,
+    });
+    toast.success("Product added to cart");
+  };
+
   return (
     <Link
       className="p-3 rounded-lg hover:shadow-lg group duration-300 transition"
@@ -39,7 +47,7 @@ function Product({ product }) {
           </div>
           <div>
             <button
-              onClick={handleAddProduct}
+              onClick={(e) => handleAddProduct(e, product)}
               className="border p-1 rounded-full hover:bg-base-200"
             >
               <MdAddShoppingCart className="text-2xl" />

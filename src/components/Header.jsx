@@ -3,10 +3,11 @@ import Logo from "../assets/logo.svg";
 import { FaShoppingCart, FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from "../hooks/useTheme";
 import { useGlobalContext } from "../hooks/useGlobalContext";
+import { formatCurrency } from "../utils";
 
 function Header() {
   const { theme, toggleTheme } = useTheme();
-  const { totalQuantity } = useGlobalContext();
+  const { totalQuantity, totalPrice } = useGlobalContext();
   return (
     <header className="bg-base-200">
       <div className="align-elements">
@@ -49,12 +50,16 @@ function Header() {
                   className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
                 >
                   <div className="card-body">
-                    <span className="text-lg font-bold">8 Items</span>
-                    <span className="text-info">Subtotal: $999</span>
+                    <span className="text-lg font-bold">
+                      {totalQuantity} Items
+                    </span>
+                    <span className="text-info text-xl font-medium">
+                      Subtotal: {formatCurrency(totalPrice)}
+                    </span>
                     <div className="card-actions">
                       <Link
                         to="/cart"
-                        className="btn btn-primary btn-block btn-sm md:btn-md"
+                        className="btn btn-primary btn-block btn-sm md:btn-md text-white"
                       >
                         View cart
                       </Link>
