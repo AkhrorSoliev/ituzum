@@ -98,7 +98,7 @@ function Product() {
             <div className="flex flex-col gap-2">
               {data.reviews.map((review) => {
                 return (
-                  <div key={review.id} className="border p-3">
+                  <div key={review.rating} className="border p-3">
                     <div className="flex justify-between">
                       <span className="font-semibold">
                         {review.reviewerName}:

@@ -10,6 +10,12 @@ function CartProduct({ product }) {
   const changeAmount = (value) => {
     if (value >= 1 && value <= product.stock) {
       setAmount(value);
+      dispatch({
+        type: "UPDATE_QUANTITY",
+        payload: product.products.map((p) =>
+          p.id === product.id ? { ...p, quantity: value } : p
+        ),
+      });
     }
   };
 
