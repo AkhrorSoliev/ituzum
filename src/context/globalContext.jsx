@@ -80,6 +80,18 @@ export function GlobalContextProvider({ children }) {
     }
   };
 
+  const updateQuantity = (productQuantity) => {
+    const products = produce(state.products, (draft) => {
+      const item = draft.find((item) => item.id === productQuantity.id);
+      item.quantity = productQuantity.amount;
+    });
+
+    dispatch({
+      type: "UPDATE_QUANTITY",
+      payload: products,
+    });
+  };
+
   useEffect(() => {
     calculateTotal();
   }, [state.products]);
@@ -89,7 +101,9 @@ export function GlobalContextProvider({ children }) {
   }, [state]);
 
   return (
-    <GlobalContext.Provider value={{ ...state, dispatch, addToCart }}>
+    <GlobalContext.Provider
+      value={{ ...state, dispatch, addToCart, updateQuantity }}
+    >
       {children}
     </GlobalContext.Provider>
   );

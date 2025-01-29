@@ -3,13 +3,22 @@ import { formatCurrency } from "../utils";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 
 function CartProduct({ product }) {
-  const { dispatch } = useGlobalContext();
+  const { dispatch, updateQuantity } = useGlobalContext();
   const [amount, setAmount] = useState(product.quantity);
 
   // Handle changes to the amount input
   const changeAmount = (value) => {
     if (value >= 1 && value <= product.stock) {
       setAmount(value);
+      updateQuantity({
+        id: product.id,
+        amount: value,
+      });
+    } else {
+      setAmount(0);
+      setTimeout(() => {
+        dispatch({ type: "REMOVE_PRODUCT", payload: product.id });
+      }, 1000);
     }
   };
 
