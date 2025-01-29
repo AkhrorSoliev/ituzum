@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { formatCurrency } from "../utils";
 import { useGlobalContext } from "../hooks/useGlobalContext";
+import Modal from "./Modal";
 
 function CartProduct({ product }) {
   const { dispatch, updateQuantity } = useGlobalContext();
@@ -17,7 +18,7 @@ function CartProduct({ product }) {
     } else {
       setAmount(0);
       setTimeout(() => {
-        dispatch({ type: "REMOVE_PRODUCT", payload: product.id });
+        document.getElementById("my_modal_1").showModal();
       }, 1000);
     }
   };
@@ -41,67 +42,73 @@ function CartProduct({ product }) {
   };
 
   return (
-    <tr>
-      <th>
-        <label>
-          <input type="checkbox" className="checkbox" />
-        </label>
-      </th>
-      <td>
-        <div className="flex items-center gap-3">
-          <div className="avatar">
-            <div className="mask mask-squircle h-12 w-12">
-              <img src={product.thumbnail} alt={`${product.title} Thumbnail`} />
+    <>
+      <tr>
+        <th>
+          <label>
+            <input type="checkbox" className="checkbox" />
+          </label>
+        </th>
+        <td>
+          <Modal id={product.id} setAmount={setAmount} />
+          <div className="flex items-center gap-3">
+            <div className="avatar">
+              <div className="mask mask-squircle h-12 w-12">
+                <img
+                  src={product.thumbnail}
+                  alt={`${product.title} Thumbnail`}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="font-bold">{product.title}</div>
+              <div className="text-sm opacity-50">Brand: {product.brand}</div>
             </div>
           </div>
-          <div>
-            <div className="font-bold">{product.title}</div>
-            <div className="text-sm opacity-50">Brand: {product.brand}</div>
+        </td>
+        <td>
+          <p>
+            {formatCurrency(
+              product.price - (product.price / 100) * product.discountPercentage
+            )}
+          </p>
+        </td>
+        <td>
+          <div className="flex items-center">
+            <button
+              onClick={incrementAmount}
+              className="btn btn-sm btn-ghost"
+              disabled={amount >= product.stock}
+            >
+              +
+            </button>
+            <input
+              onChange={(e) => changeAmount(Number(e.target.value))}
+              type="number"
+              className="input w-12 input-sm text-center font-medium"
+              min={1}
+              max={product.stock}
+              value={amount}
+            />
+            <button
+              onClick={decrementAmount}
+              className="btn btn-sm btn-ghost"
+              disabled={amount <= 1}
+            >
+              -
+            </button>
           </div>
-        </div>
-      </td>
-      <td>
-        <p>
-          {formatCurrency(
-            product.price - (product.price / 100) * product.discountPercentage
-          )}
-        </p>
-      </td>
-      <td>
-        <div className="flex items-center">
+        </td>
+        <th>
           <button
-            onClick={incrementAmount}
-            className="btn btn-sm btn-ghost"
-            disabled={amount >= product.stock}
+            onClick={() => removeProduct(product.id)}
+            className="btn btn-ghost hover:bg-red-400 hover:text-white btn-xs"
           >
-            +
+            Delete
           </button>
-          <input
-            onChange={(e) => changeAmount(Number(e.target.value))}
-            type="number"
-            className="input w-12 input-sm text-center font-medium"
-            min={1}
-            max={product.stock}
-            value={amount}
-          />
-          <button
-            onClick={decrementAmount}
-            className="btn btn-sm btn-ghost"
-            disabled={amount <= 1}
-          >
-            -
-          </button>
-        </div>
-      </td>
-      <th>
-        <button
-          onClick={() => removeProduct(product.id)}
-          className="btn btn-ghost hover:bg-red-400 hover:text-white btn-xs"
-        >
-          Delete
-        </button>
-      </th>
-    </tr>
+        </th>
+      </tr>
+    </>
   );
 }
 
