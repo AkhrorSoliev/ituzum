@@ -3,10 +3,17 @@ import { produce } from "immer";
 
 export const GlobalContext = createContext();
 
-const initialState = {
-  products: [],
-  totalPrice: 0,
-  totalQuantity: 0,
+const getDataFromLocalStorage = () => {
+  const data = localStorage.getItem("cart");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return {
+      products: [],
+      totalPrice: 0,
+      totalQuantity: 0,
+    };
+  }
 };
 
 const changeState = (state, action) => {
@@ -41,7 +48,7 @@ const changeState = (state, action) => {
 };
 
 export function GlobalContextProvider({ children }) {
-  const [state, dispatch] = useReducer(changeState, initialState);
+  const [state, dispatch] = useReducer(changeState, getDataFromLocalStorage());
 
   const calculateTotal = () => {
     const totalPrice = state.products.reduce((acc, product) => {
@@ -55,6 +62,7 @@ export function GlobalContextProvider({ children }) {
       type: "CALCULATE_TOTAL",
       payload: { totalPrice, totalQuantity },
     });
+    localStorage.setItem("cart", JSON.stringify(state));
   };
 
   const addToCart = (product) => {
