@@ -5,10 +5,22 @@ import { MdOutlineDiscount } from "react-icons/md";
 import { FaShippingFast } from "react-icons/fa";
 import { formatCurrency } from "../utils";
 import { MdAddShoppingCart } from "react-icons/md";
+import { useGlobalContext } from "../hooks/useGlobalContext";
+import toast from "react-hot-toast";
 
 function Product() {
   const { id } = useParams();
+  const { addToCart } = useGlobalContext();
   const { data, error, isPending } = useFetch(`/products/${id}`);
+
+  const handleAddProduct = (e, product) => {
+    e.preventDefault();
+    addToCart({
+      ...product,
+      quantity: 1,
+    });
+    toast.success("Product added to cart");
+  };
 
   if (error) {
     return (
@@ -82,8 +94,8 @@ function Product() {
             </div>
             <div className="mb-5">
               <button
-                onClick={() => {
-                  console.log("add to cart");
+                onClick={(e) => {
+                  handleAddProduct(e, data);
                 }}
                 className="btn btn-primary btn-block text-white"
               >
