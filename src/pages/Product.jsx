@@ -66,24 +66,31 @@ function Product() {
               <span> {data.shippingInformation}</span>
             </div>
           </div>
-          <div className="flex items-center gap-8 w-full mb-8">
-            <h3 className="text-4xl">
-              {formatCurrency(
-                data.price - (data.price / 100) * data.discountPercentage
-              )}
-            </h3>
-            <p className="text-xl opacity-80 line-through">
-              {formatCurrency(data.price)}
-            </p>
-            <p className="text-md  badge badge-info text-content">
-              {data.discountPercentage}%
-            </p>
-          </div>
-          <div className="mb-5">
-            <button className="btn btn-primary btn-block text-white">
-              Add to Cart
-              <MdAddShoppingCart className="text-xl" />
-            </button>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-8 mb-8">
+              <h3 className="text-4xl">
+                {formatCurrency(
+                  data.price - (data.price / 100) * data.discountPercentage
+                )}
+              </h3>
+              <p className="text-xl opacity-80 line-through">
+                {formatCurrency(data.price)}
+              </p>
+              <p className="text-md  badge badge-info text-content">
+                {data.discountPercentage}%
+              </p>
+            </div>
+            <div className="mb-5">
+              <button
+                onClick={() => {
+                  console.log("add to cart");
+                }}
+                className="btn btn-primary btn-block text-white"
+              >
+                Add to Cart
+                <MdAddShoppingCart className="text-xl" />
+              </button>
+            </div>
           </div>
           <div className="mb-4">
             <p className="text-lg text-justify">
@@ -98,7 +105,10 @@ function Product() {
             <div className="flex flex-col gap-2">
               {data.reviews.map((review) => {
                 return (
-                  <div key={review.rating} className="border p-3">
+                  <div
+                    key={review.rating + Math.random()}
+                    className="border p-3"
+                  >
                     <div className="flex justify-between">
                       <span className="font-semibold">
                         {review.reviewerName}:
