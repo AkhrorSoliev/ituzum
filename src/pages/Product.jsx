@@ -5,10 +5,31 @@ import { MdOutlineDiscount } from "react-icons/md";
 import { FaShippingFast } from "react-icons/fa";
 import { formatCurrency } from "../utils";
 import { MdAddShoppingCart } from "react-icons/md";
+import { useGlobalContext } from "../hooks/useGlobalContext";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 function Product() {
   const { id } = useParams();
+  const { addToCart, products } = useGlobalContext();
   const { data, error, isPending } = useFetch(`/products/${id}`);
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
+
+  const handleAddProduct = (e, product) => {
+    e.preventDefault();
+    addToCart({
+      ...product,
+      quantity: 1,
+    });
+    toast.success("Product added to cart");
+  };
+
+  useEffect(() => {
+    const item = products.find((p) => p.id == id);
+    if (item) {
+      setAlreadyAdded(true);
+    }
+  }, [products]);
 
   if (error) {
     return (
@@ -81,15 +102,23 @@ function Product() {
               </p>
             </div>
             <div className="mb-5">
-              <button
-                onClick={() => {
-                  console.log("add to cart");
-                }}
-                className="btn btn-primary btn-block text-white"
-              >
-                Add to Cart
-                <MdAddShoppingCart className="text-xl" />
-              </button>
+              {alreadyAdded ? (
+                <div className="flex items-center gap-5">
+                  <button>+</button>
+                  <input className="input input-primary" type="input" />
+                  <button>-</button>
+                </div>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    handleAddProduct(e, data);
+                  }}
+                  className="btn btn-primary btn-block text-white"
+                >
+                  Add to Cart
+                  <MdAddShoppingCart className="text-xl" />
+                </button>
+              )}
             </div>
           </div>
           <div className="mb-4">
